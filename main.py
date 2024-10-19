@@ -42,6 +42,8 @@ def submit():
 
         data = prompt(get_text(user_input))
         print(data)
+        data = json.loads(data)
+        print(data)
         filepath = "outputs/structure.json"
 
         with open(filepath, 'w') as json_file:
