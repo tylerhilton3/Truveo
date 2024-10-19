@@ -1,6 +1,5 @@
-from scraper import full_content
+from main import text_data
 import openai
-
 openai.api_key = "key"
 
 with open("prompt.txt", 'r') as file:
