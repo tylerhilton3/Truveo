@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import validators
 from scraper import get_text
+from generator import get_
 
 
 # Create the root window
@@ -45,6 +46,7 @@ def submit():
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
         text_data = get_text(user_input)
+        return(text_data)
     else:
         # Show a pop-up message for invalid link
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
