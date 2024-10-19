@@ -1,4 +1,4 @@
-from scraper import full_content
+from main import submit
 import openai
 import os
 from dotenv import load_dotenv
@@ -26,7 +26,7 @@ def summarize_text(text):
     return summary
 
 # Call the function to summarize the webpage text
-summary = summarize_text(full_content)
+summary = summarize_text(submit)
 print(summary)
 
 
