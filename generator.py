@@ -1,34 +1,22 @@
-from openai import OpenAI
 import openai
-client = OpenAI()
 import os
 from dotenv import load_dotenv
-load_dotenv()
 
-client.api_key = str(os.getenv("openai_key"))
+def initialize_key():
+    load_dotenv()
 
-with open("prompt.txt", 'r') as file:
-    prompt = file.read()
+    # Load the API key from the environment
+    openai.api_key = os.getenv("OPENAI_API_KEY")
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+    if not openai.api_key:
+        raise ValueError("API Key not found. Make sure it's set in your environment variables.")
 
 
-def test():
-    completion = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {
-                "role": "user",
-                "content": "Write a haiku about recursion in programming."
-            }
-        ]
-    )
-    print(completion)
-    return(completion)
-
-def test2(text):
-    response = client.chat.completions.create(
+def get_summary(text):
+    initialize_key()
+    with open("testprompt.txt", "r") as file:
+        prompt = file.read()
+    response = openai.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
@@ -40,8 +28,12 @@ def test2(text):
     )
     
     # Extract the summary from the response
-    summary = response.choices[0].message
+    summary = response.choices[0].message.content
     return summary
 
+def get_ytquery():
+    pass
 
+def get_articlevid():
+    pass
 
