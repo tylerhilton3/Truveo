@@ -46,8 +46,4 @@ def add_captions_with_timing(video_path, json_path, output_path):
     # Write the final video with captions to output path
     final_video.write_videofile(output_path, codec="libx264")
 
-# Usage example
-video_path = "videos\.mp4"
-json_path = "path_to_json_script.json"
-output_path = "final_video_with_captions.mp4"
-add_captions_with_timing(video_path, json_path, output_path)
+
