@@ -47,3 +47,9 @@ def get_text(url):
     # Join and print the content
     full_content = "\n".join(content)
     return full_content
+
+def get_html(url):
+    result = requests.get(url)
+    html = result.text
+    return html
+

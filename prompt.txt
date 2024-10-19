@@ -1,1 +1,9 @@
-The end goal is a video created by moviepy that is a summary of the truthfulness of an article from an inputted URL. We will give you a summary of the
+You are an AI assistant tasked with analyzing articles. Given the following text, please:
+
+1. Provide a summary of the article.
+2. This summary should talk about the article information, the main points, and the conclusion.
+3. At the 
+3. Generate a list of background images that correspond to the article's content, with descriptions for each image.
+
+Please format your response as a JSON object containing the summary, credibility assessment, and background images.
+
