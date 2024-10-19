@@ -1,8 +1,0 @@
-You are an AI assistant tasked with analyzing articles. Given the following text, please:
-
-1. Provide a summary of the article.
-2. This summary should talk about the article information, the main points, and the conclusion. At the end of the summary, provide an assessment on whether or not the article is credible.
-3. Break up this summary into parts, each part will have a corresponding video that will be played in the background while that part of the summary is being read. 
-4. Now based on how long you think its going to take to read the article, provide a list of background video links that correspond to the article's content.
-5. Please format your response as a JSON object with the following format: [[summary_part_1, summary_part_2, summary_part_3, ...], [video_part_1, video_part_2, video_part_3, ...]]
-
