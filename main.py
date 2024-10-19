@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 import validators
-from scraper import get_text
-from generator import get_summary
+from scraper import get_text, get_html
+from generator import prompt
 
 
 ### UI Implementation
@@ -39,7 +39,7 @@ def submit():
         entry.delete(0, "end")
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
-        print(get_summary(get_text(user_input)))
+        print(prompt(get_html(user_input)))
     else:
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
     

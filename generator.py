@@ -11,10 +11,9 @@ def initialize_key():
     if not openai.api_key:
         raise ValueError("API Key not found. Make sure it's set in your environment variables.")
 
-
-def get_summary(text):
+def prompt(text):
     initialize_key()
-    with open("testprompt.txt", "r") as file:
+    with open("megaprompt.txt", "r") as file:
         prompt = file.read()
     response = openai.chat.completions.create(
         model="gpt-4o-mini",
@@ -23,17 +22,16 @@ def get_summary(text):
             {"role": "user", "content":
              f"{prompt}\n\n{text}"}
         ],
-        max_tokens=200,  # Adjust the length of the summary
-        temperature=0.5
+        max_tokens = 500,  # Adjust the length of the summary
+        temperature = 0
     )
-    
-    # Extract the summary from the response
-    summary = response.choices[0].message.content
-    return summary
+    return response.choices[0].message.content
 
-def get_ytquery():
-    pass
+def get_summary(text):
+    return prompt("", text)
 
-def get_articlevid():
-    pass
+def get_ytquery(text):
+    return prompt("", text)
 
+def get_articlevid(text):
+    return prompt("", text)
