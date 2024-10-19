@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
 import validators
-from scraper import get_text, get_html
+from scraper import get_text
 from prompter import prompt
 import json
 
