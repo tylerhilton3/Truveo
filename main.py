@@ -2,12 +2,13 @@ import tkinter as tk
 from tkinter import messagebox
 import validators
 from scraper import get_text
+from generator import test
 
 
 # Create the root window
 root = tk.Tk()
 root.geometry("400x200")
-root.title("I-Hack 2024")
+root.title("Truveo")
 
 # Create a label for the title at the top
 title_label = tk.Label(root, text="Curecancer.py", font=("Helvetica", 16, "bold"))
@@ -44,8 +45,7 @@ def submit():
         entry.delete(0, "end")
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
-        text_data = get_text(user_input)
-        print(text_data)
+        test(get_text(user_input))
     else:
         # Show a pop-up message for invalid link
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
