@@ -4,6 +4,10 @@ from tkinter import filedialog
 import validators
 from scraper import get_text
 from prompter import prompt
+from video_search import search_video, download_video  # Import functions for video search and download
+from ai_voiceover import generate_ai_voiceover  # Import function for AI voiceover
+from add_captions import add_captions_with_timing  # Import function for adding captions
+import os
 import json
 
 ### UI Implementation
@@ -33,7 +37,32 @@ def on_focus_out(event):
 entry.bind("<FocusIn>", on_click)
 entry.bind("<FocusOut>", on_focus_out)
 
+def process_video():
+    download_folder = r"C:\Users\14064\OneDrive\Documents\school\2024Fall\Ihack\IntegrityAndMight-1\videos"
+    json_path = r"path_to_your_json_file.json"  # Set your JSON path here
 
+    # Ensure the download folder exists
+    os.makedirs(download_folder, exist_ok=True)
+
+    # Search for the video
+    video_id, title = search_video("1 minute meme video")
+
+    if video_id:
+        # Download the video
+        download_video(video_id, download_folder)
+
+        # Generate the AI voiceover
+        ai_voiceover_path = generate_ai_voiceover(json_path)
+
+        # Add captions (you can adjust this function to accept ai_voiceover_path if needed)
+        add_captions_with_timing(download_folder, ai_voiceover_path)
+
+
+
+# if __name__ == "__main__":
+#     # Replace this with actual user input handling if necessary
+#     user_input = "1 minute meme"  # Placeholder for user input
+#     process_video()
 
 # Function to handle the input and process the link
 def submit():
