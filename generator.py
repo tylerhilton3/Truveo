@@ -1,14 +1,17 @@
 from scraper import full_content
 import openai
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-openai.api_key = "key"
+openai.api_key = str(os.getenv("openai_key"))
 
 with open("prompt.txt", 'r') as file:
     prompt = file.read()
 
 def summarize_text(text):
-    response = openai.ChatCompletion.create(
-        model="gpt-4",  # or "gpt-3.5-turbo" for GPT-3
+    response = openai.Client.chat.completions.create(
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content":
@@ -19,11 +22,11 @@ def summarize_text(text):
     )
     
     # Extract the summary from the response
-    summary = response['choices'][0]['message']['content']
+    summary = response.choices[0].message
     return summary
 
 # Call the function to summarize the webpage text
-summary = summarize_text()
+summary = summarize_text(full_content)
 print(summary)
 
 

@@ -5,7 +5,7 @@ import validators
 # Create the root window
 root = tk.Tk()
 root.geometry("400x200")
-root.title("I-Hack 2024")
+root.title("Truveo")
 
 # Create a label for the title at the top
 title_label = tk.Label(root, text="Curecancer.py", font=("Helvetica", 16, "bold"))

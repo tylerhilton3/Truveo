@@ -1,1 +1,1 @@
-The end goal is a video created by moviepy that is a summary of the truthfulness of an article from an inputted URL. We will give you a summary of the
+this is a test. here is some data from a webpage. just tell me in 2 sentences what its about.
