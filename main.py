@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import filedialog
 import validators
 from scraper import get_text, get_html
 from prompter import prompt
@@ -41,6 +42,7 @@ def submit():
         entry.delete(0, "end")
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
+        save_file()
 
         data = prompt(get_text(user_input))
         print(data)
@@ -52,7 +54,18 @@ def submit():
             json.dump(data, json_file)
     else:
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
+
+def save_file():
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
     
+    # Open a file dialog for saving
+    file_path = filedialog.asksaveasfilename(defaultextension=".mp4", 
+                                             filetypes=[("MP4 Video files", "*.mp4"), 
+                                                        ("All Files", "*.*")],
+                                             title="Save your video as...")
+    if file_path:
+        print(f"Your video will be saved to: {file_path}")
 # Create a button to submit the input
 submit_button = tk.Button(root, text="Submit", command=submit, font=("Helvetica", 12))
 submit_button.pack(pady=20)
