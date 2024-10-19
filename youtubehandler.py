@@ -72,5 +72,3 @@ def get_videos():
     for i in range(3):
         download_query_video("outputs/", f"yt{i+1}", structure[0][i][1])
     download_query_video("outputs/", "yt4", structure[1][1], length="00:00:59")
-
-get_videos()

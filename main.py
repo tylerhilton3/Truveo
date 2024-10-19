@@ -6,10 +6,8 @@ import scraper as scr
 import prompter as pr
 import youtubehandler as yth
 import voiceoverhandler as voh
-import add_captions as ac
 import os
 import json
-from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from moviepy.editor import VideoFileClip, concatenate_videoclips, AudioFileClip, concatenate_audioclips
 def delete():
     files = [
@@ -30,6 +28,8 @@ def delete():
             os.remove(file)
         except FileNotFoundError:
             pass
+
+
 ### UI Implementation
 delete()
 root = tk.Tk()
@@ -38,19 +38,18 @@ root.title("Truveo")
 icon = tk.PhotoImage(file='images/logo.png')
 root.iconphoto(False, icon)
 
-title_label = tk.Label(root, text="Curecancer.py", font=("Helvetica", 16, "bold"))
+title_label = tk.Label(root, text="Article Credibility Checker", font=("Helvetica", 16, "bold"))
 title_label.pack(pady=10)
 
 entry = tk.Entry(root, width=50, fg='gray')
-entry.insert(0, "Enter a link you would like to fact check:")
 entry.pack(pady=10)
 
-def on_click():
+def on_click(event):
     if entry.get() == "Enter a link you would like to fact check:":
         entry.delete(0, "end")
         entry.config(fg='black')
 
-def on_focus_out():
+def on_focus_out(event):
     if entry.get() == "":
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
@@ -65,8 +64,6 @@ def submit():
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
         save_file()
-
-
         data = json.loads(pr.prompt(scr.get_text(user_input)))
         with open("structure.json", "w") as x:
             json.dump(data, x)
@@ -74,6 +71,7 @@ def submit():
         yth.get_videos()
         voh.get_voiceovers()
         create_video()
+        root.quit()
     else:
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
 
@@ -94,8 +92,8 @@ def save_file():
 
 
 def create_video():
-    width = 640
-    height = 360
+    width = 1920
+    height = 1080
     yt_video_one = VideoFileClip("outputs/yt1.mp4")
     yt_video_two = VideoFileClip("outputs/yt2.mp4")
     yt_video_three = VideoFileClip("outputs/yt3.mp4")
@@ -125,13 +123,6 @@ def create_video():
     final_clip = combined_clips.set_audio(combined_audio)
     final_clip.write_videofile(OUTPUT_PATH, fps=60)
     
-
-
-
-    
-
-
-
 
 # Create a button to submit the input
 submit_button = tk.Button(root, text="Submit", command=submit, font=("Helvetica", 12))

@@ -25,4 +25,5 @@ def prompt(text):
         max_tokens = 500,  # Adjust the length of the summary
         temperature = 0
     )
+    print(response.choices[0].message.content)
     return response.choices[0].message.content

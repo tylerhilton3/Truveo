@@ -27,5 +27,3 @@ def get_voiceovers():
         tts.save(voiceover_path)
         AudioSegment.from_file(voiceover_path).speedup(playback_speed=1.25).export(voiceover_path)
         voice += 1
-
-get_voiceovers()
