@@ -6,16 +6,7 @@ Video Query Keywords: For each of the three summarized sentences, pair it in a d
 
 Credibility Summary: Provide a two-sentence summary regarding the credibility of the article, including insights on the sources and author's credentials. Follow this with one sentence that gives an overall credibility score out of 10.
 
-Return the output structured as a dictionary with the following format as an example if you were given an article on Liam Payne's death:
+Do not return any formatting instructions like backslash n. The output of this prompt should be able to be put directly into a json file.
+Return the output structured exactly following this format as an example if you were given an article on Liam Payne's death:
 
-{
-    "Liam Payne's tragic death at the age of 31 has left his family, friends, and former bandmates in shock as authorities investigate the circumstances surrounding his fatal fall from a hotel balcony in Buenos Aires." : "The investigation into Liam Payne's death",
-    "Initial reports suggest that Payne may have been alone and possibly under the influence of substances at the time of his fall, with evidence found in his hotel room indicating prior drug and alcohol consumption." : "Liam Payne hotel balcony fall news report",
-    "As the investigation continues, tributes from his One Direction bandmates and fans highlight Payne's impact on their lives and the music industry." : "One Direction tributes to Liam Payne"
-},
-[
-    [
-        "The article cites multiple sources, including local authorities and statements from Payne's family and bandmates, providing a well-rounded perspective on the incident." , "The authors, Sol Amaya and Ana Melgar, are associated with CNN, a reputable news organization known for its journalistic standards."
-    ],
-    "I'd give this article an 8 out of 10 on credibility."
-]
+[[["Liam Payne's tragic death at the age of 31 has left his family, friends, and former bandmates in shock as authorities investigate the circumstances surrounding his fatal fall from a hotel balcony in Buenos Aires.", "The investigation into Liam Payne's death"], ["Initial reports suggest that Payne may have been alone and possibly under the influence of substances at the time of his fall, with evidence found in his hotel room indicating prior drug and alcohol consumption.", "Liam Payne hotel balcony fall news report"], ["As the investigation continues, tributes from his One Direction bandmates and fans highlight Payne's impact on their lives and the music industry.", "One Direction tributes to Liam Payne"], [["The article cites multiple sources, including local authorities and statements from Payne's family and bandmates, providing a well-rounded perspective on the incident." , "The authors, Sol Amaya and Ana Melgar, are associated with CNN, a reputable news organization known for its journalistic standards."], "I'd give this article an 8 out of 10 on credibility."]]]

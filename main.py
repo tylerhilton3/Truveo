@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 import validators
 from scraper import get_text, get_html
-from generator import prompt
-
+from prompter import prompt
+import json
 
 ### UI Implementation
 root = tk.Tk()
@@ -39,7 +39,13 @@ def submit():
         entry.delete(0, "end")
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
-        print(prompt(get_html(user_input)))
+
+        data = prompt(get_text(user_input))
+        print(data)
+        filepath = "outputs/structure.json"
+
+        with open(filepath, 'w') as json_file:
+            json.dump(data, json_file)
     else:
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
     
