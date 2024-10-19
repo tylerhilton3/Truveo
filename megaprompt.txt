@@ -1,0 +1,23 @@
+I will provide you with the text of an article. Based on the content, perform the following tasks:
+
+Three-Sentence Summary: Summarize the article in three sentences, focusing on the core message of the content.
+
+Video Query Keywords: For each of the three summarized sentences, pair it in a dictionary with a good youtube search query that would result in stock footage, news clips, or other relevant videos that could be used as background footage for that part of the summary.
+
+Credibility Summary: Provide a two-sentence summary regarding the credibility of the article, including insights on the sources and author's credentials. Follow this with one sentence that gives an overall credibility score out of 10.
+
+Return the output structured as a dictionary with the following format:
+
+{
+    "summary sentence 1": "youtube query 1",
+    "summary sentence 2": "youtube query 2",
+    "summary sentence 3": "youtube query 3",
+},
+[
+    [
+        "credibility sentence 1",
+        "credibility sentence 2",
+        "credibility score sentence
+    ],
+    "youtube query about article"
+]
