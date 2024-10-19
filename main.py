@@ -12,17 +12,24 @@ import json
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from moviepy.editor import VideoFileClip, concatenate_videoclips, AudioFileClip, concatenate_audioclips
 def delete():
-    os.remove("outputs/yt1.mp4")
-    os.remove("outputs/yt2.mp4")
-    os.remove("outputs/yt3.mp4")
-    os.remove("outputs/yt4.mp4")
-    os.remove("outputs/voice1.mp3")
-    os.remove("outputs/voice2.mp3")
-    os.remove("outputs/voice3.mp3")
-    os.remove("outputs/voice4.mp3")
-    os.remove("outputs/voice5.mp3")
-    os.remove("outputs/voice6.mp3")
-    os.remove("final_video.mp4")
+    files = [
+    "outputs/yt1.mp4",
+    "outputs/yt2.mp4",
+    "outputs/yt3.mp4",
+    "outputs/yt4.mp4",
+    "outputs/voice1.mp3",
+    "outputs/voice2.mp3",
+    "outputs/voice3.mp3",
+    "outputs/voice4.mp3",
+    "outputs/voice5.mp3",
+    "outputs/voice6.mp3",
+    "final_video.mp4"
+    ]
+    for file in files:
+        try:
+            os.remove(file)
+        except FileNotFoundError:
+            pass
 ### UI Implementation
 delete()
 root = tk.Tk()
@@ -113,10 +120,8 @@ def create_video():
     subclip_one = yt_video_one.subclip(0,audio_one_duration)
     subclip_two = yt_video_two.subclip(0,audio_two_duration)
     subclip_three = yt_video_three.subclip(0,audio_three_duration)
-    subclip_four = yt_video_four.subclip(0,audio_four_duration)
-    subclip_five =yt_video_four.subclip(0,audio_five_duration)
-    subclip_six = yt_video_four.subclip(0,audio_six_duration)
-    combined_clips = concatenate_videoclips([subclip_one, subclip_two, subclip_three, subclip_four, subclip_five, subclip_six])
+    subclip_four = yt_video_four.subclip(0,audio_four_duration+audio_five_duration+audio_six_duration)
+    combined_clips = concatenate_videoclips([subclip_one, subclip_two, subclip_three, subclip_four])
     final_clip = combined_clips.set_audio(combined_audio)
     final_clip.write_videofile(OUTPUT_PATH, fps=60)
     
