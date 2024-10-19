@@ -32,21 +32,20 @@ def on_focus_out(event):
 entry.bind("<FocusIn>", on_click)
 entry.bind("<FocusOut>", on_focus_out)
 
-
-
 # Function to handle the input and process the link
 def submit():
     user_input = entry.get()
+    # Validate the URL using the validators library
     if validators.url(user_input):
         print("Link submitted:", user_input)
-        # Add further processing for the valid link
+        # Clear the entry box and refill with placeholder text
+        entry.delete(0, "end")
+        entry.insert(0, "Enter a link you would like to fact check:")
+        entry.config(fg='gray')
     else:
         # Show a pop-up message for invalid link
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
     
-    
-
-
 # Create a button to submit the input
 submit_button = tk.Button(root, text="Submit", command=submit, font=("Helvetica", 12))
 submit_button.pack(pady=20)
