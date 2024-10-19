@@ -10,7 +10,7 @@ result = requests.get(url)
 # Parse the HTML content with BeautifulSoup
 soup = BeautifulSoup(result.text, 'html.parser')
 
-# Extract the title of the article (commonly in h1 or h2 tags)
+# Extract the title of the article (commonly in h1 or h2 tags) saokdjsao idjiaso
 title = soup.find('h1')
 if not title:
     title = soup.find('h2')  # Fallback if h1 is not found
