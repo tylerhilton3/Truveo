@@ -1,6 +1,8 @@
 from gtts import gTTS
 import json
 import os
+from pydub import AudioSegment
+
 
 def get_voiceovers():
     with open(("structure.json"), 'r') as x:
@@ -23,6 +25,7 @@ def get_voiceovers():
         file_name = f"voice{voice}.mp3"
         voiceover_path = os.path.join(directory, file_name)
         tts.save(voiceover_path)
+        AudioSegment.from_file(voiceover_path).speedup(playback_speed=1.25).export(voiceover_path)
         voice += 1
 
 get_voiceovers()
