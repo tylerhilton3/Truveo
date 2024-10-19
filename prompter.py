@@ -26,12 +26,3 @@ def prompt(text):
         temperature = 0
     )
     return response.choices[0].message.content
-
-def get_summary(text):
-    return prompt("", text)
-
-def get_ytquery(text):
-    return prompt("", text)
-
-def get_articlevid(text):
-    return prompt("", text)

@@ -1,4 +1,0 @@
-From the provided HTML:
-Search within the provided HTML for video files.
-If video files are found, return a list in python of the file URLs.
-If no video files are found, return an empty list in python.
