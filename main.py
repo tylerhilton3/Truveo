@@ -9,8 +9,22 @@ import voiceoverhandler as voh
 import add_captions as ac
 import os
 import json
-
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+from moviepy.editor import VideoFileClip, concatenate_videoclips, AudioFileClip, concatenate_audioclips
+def delete():
+    os.remove("outputs/yt1.mp4")
+    os.remove("outputs/yt2.mp4")
+    os.remove("outputs/yt3.mp4")
+    os.remove("outputs/yt4.mp4")
+    os.remove("outputs/voice1.mp3")
+    os.remove("outputs/voice2.mp3")
+    os.remove("outputs/voice3.mp3")
+    os.remove("outputs/voice4.mp3")
+    os.remove("outputs/voice5.mp3")
+    os.remove("outputs/voice6.mp3")
+    os.remove("final_video.mp4")
 ### UI Implementation
+delete()
 root = tk.Tk()
 root.geometry("400x200")
 root.title("Truveo")
@@ -45,16 +59,20 @@ def submit():
         entry.config(fg='gray')
         save_file()
 
-        data = pr.prompt(scr.get_text(user_input))
-        data = json.loads(data)
-        filepath = "structure.json"
 
-        with open(filepath, 'w') as json_file:
-            json.dump(data, json_file)
+        data = json.loads(pr.prompt(scr.get_text(user_input)))
+        with open("structure.json", "w") as x:
+            json.dump(data, x)
+        
+        yth.get_videos()
+        voh.get_voiceovers()
+        create_video()
     else:
         messagebox.showerror("Invalid URL", "Please enter a valid URL starting with 'https://' or 'http://'.")
 
+OUTPUT_PATH = "final_video.mp4"
 def save_file():
+    global OUTPUT_PATH
     root = tk.Tk()
     root.withdraw()  # Hide the main window
     
@@ -65,9 +83,55 @@ def save_file():
                                              title="Save your video as...")
     if file_path:
         print(f"Your video will be saved to: {file_path}")
+        OUTPUT_PATH = file_path
+
+
+def create_video():
+    width = 640
+    height = 360
+    yt_video_one = VideoFileClip("outputs/yt1.mp4")
+    yt_video_two = VideoFileClip("outputs/yt2.mp4")
+    yt_video_three = VideoFileClip("outputs/yt3.mp4")
+    yt_video_four = VideoFileClip("outputs/yt4.mp4")
+    yt_video_one = yt_video_one.resize(newsize=(width, height)).set_fps(60)
+    yt_video_two = yt_video_two.resize(newsize=(width, height)).set_fps(60)
+    yt_video_three = yt_video_three.resize(newsize=(width, height)).set_fps(60)
+    yt_video_four = yt_video_four.resize(newsize=(width, height)).set_fps(60)
+    audio_one = AudioFileClip("outputs/voice1.mp3")
+    audio_two = AudioFileClip("outputs/voice2.mp3")
+    audio_three = AudioFileClip("outputs/voice3.mp3")
+    audio_four = AudioFileClip("outputs/voice4.mp3")
+    audio_five = AudioFileClip("outputs/voice5.mp3")
+    audio_six = AudioFileClip("outputs/voice6.mp3")
+    audio_one_duration = audio_one.duration
+    audio_two_duration = audio_two.duration
+    audio_three_duration = audio_three.duration
+    audio_four_duration = audio_four.duration
+    audio_five_duration = audio_five.duration
+    audio_six_duration = audio_six.duration
+    combined_audio = concatenate_audioclips([audio_one, audio_two, audio_three, audio_four, audio_five, audio_six])
+    subclip_one = yt_video_one.subclip(0,audio_one_duration)
+    subclip_two = yt_video_two.subclip(0,audio_two_duration)
+    subclip_three = yt_video_three.subclip(0,audio_three_duration)
+    subclip_four = yt_video_four.subclip(0,audio_four_duration)
+    subclip_five =yt_video_four.subclip(0,audio_five_duration)
+    subclip_six = yt_video_four.subclip(0,audio_six_duration)
+    combined_clips = concatenate_videoclips([subclip_one, subclip_two, subclip_three, subclip_four, subclip_five, subclip_six])
+    final_clip = combined_clips.set_audio(combined_audio)
+    final_clip.write_videofile(OUTPUT_PATH, fps=60)
+    
+
+
+
+    
+
+
+
+
 # Create a button to submit the input
 submit_button = tk.Button(root, text="Submit", command=submit, font=("Helvetica", 12))
 submit_button.pack(pady=20)
 
 # Run the application
 root.mainloop()
+
