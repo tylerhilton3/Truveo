@@ -1,47 +1,58 @@
 import os
-import json
-import subprocess
-from yt_dlp import YoutubeDL
+from googleapiclient.discovery import build
+import yt_dlp
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+
+# YouTube Data API credentials
+API_KEY = 'AIzaSyA5Nrkx-G0l2rvksNxn_KvEsotZzynhMtU'  # Replace with your YouTube Data API key
 
 def search_video(query):
-    ydl_opts = {
-        'format': 'best',
-        'noplaylist': True,
-    }
+    youtube = build('youtube', 'v3', developerKey=API_KEY)
+    
+    # Search for videos matching the query
+    request = youtube.search().list(
+        q=query,
+        part='id,snippet',
+        maxResults=1,
+        type='video'
+    )
+    response = request.execute()
 
-    with YoutubeDL(ydl_opts) as ydl:
-        result = ydl.extract_info(query, download=False)
-        if 'entries' in result:
-            video_info = result['entries'][0]
-            return video_info['id'], video_info['title']
-        else:
-            print("No video found for the given query.")
-            return None, None
+    if response['items']:
+        video_info = response['items'][0]
+        video_id = video_info['id']['videoId']
+        title = video_info['snippet']['title']
+        return video_id, title
+    else:
+        print("No video found for the given query.")
+        return None, None
 
 def download_video(video_id, download_folder):
+    video_url = f"https://www.youtube.com/watch?v={video_id}"
+    print(f"Attempting to download from: {video_url}")
+
     ydl_opts = {
         'format': 'best',
-        'outtmpl': os.path.join(download_folder, f'{video_id}.mp4'),
-        'noplaylist': True,
+        'outtmpl': f"{download_folder}/{video_id}.%(ext)s",
         'postprocessors': [{
-            'key': 'FFmpegVideoConvertor',
-            'preferedformat': 'mp4',
+            'key': 'FFmpegVideoConvertor',  # Correct the key spelling
+            'preferedformat': 'mp4',  # Correct the spelling here as well
         }],
     }
+    
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([video_url])
+        
+        # Get the downloaded file path
+        video_file_path = os.path.join(download_folder, f"{video_id}.mp4")
+        # Trim the video to the first 60 seconds
+        trimmed_file_path = os.path.join(download_folder, f"{video_id}_trimmed.mp4")
+        ffmpeg_extract_subclip(video_file_path, 0, 60, targetname=trimmed_file_path)
+        print(f"Trimmed video saved to: {trimmed_file_path}")
 
-    with YoutubeDL(ydl_opts) as ydl:
-        ydl.download([f'https://www.youtube.com/watch?v={video_id}'])
+        # Optionally, remove the original file after trimming
+        os.remove(video_file_path)
 
-if __name__ == "__main__":
-    query = "1 minute meme"  # Your search query
-    download_folder = r"C:\Users\14064\OneDrive\Documents\school\2024Fall\Ihack\IntegrityAndMight-1\videos"
-
-    os.makedirs(download_folder, exist_ok=True)
-
-    # Search for the video
-    video_id, title = search_video(query)
-
-    if video_id:
-        # Download the video if a valid video ID was found
-        download_video(video_id, download_folder)
-        print(f"Video downloaded: {title}")
+    except Exception as e:
+        print(f"Error downloading video '{video_id}': {e}")

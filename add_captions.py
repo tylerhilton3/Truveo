@@ -1,25 +1,53 @@
-import os
-import json
 from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
+import json
 
-def add_captions(video_path, captions, output_path):
-    video = VideoFileClip(video_path)
-    clips = []
+def add_captions_with_timing(video_path, json_path, output_path):
+    # Load the video
+    video_clip = VideoFileClip(video_path)
 
-    for caption in captions:
-        txt_clip = TextClip(caption['text'], fontsize=24, color='white', bg_color='black', size=video.size)
-        txt_clip = txt_clip.set_position('bottom').set_duration(caption['duration']).set_start(caption['start'])
-        clips.append(txt_clip)
+    # Load the JSON script
+    with open(json_path, 'r') as f:
+        script = json.load(f)
 
-    final_video = CompositeVideoClip([video] + clips)
-    final_video.write_videofile(output_path, codec='libx264', audio_codec='aac')
+    # Create a list to store all the caption clips
+    caption_clips = []
 
-if __name__ == "__main__":
-    video_path = r"C:\Users\14064\OneDrive\Documents\school\2024Fall\Ihack\IntegrityAndMight-1\videos\your_video_id.mp4"  # Replace with your video path
-    captions_path = r"C:\path\to\your\captions.json"  # Path to your JSON captions file
-    output_path = r"C:\Users\14064\OneDrive\Documents\school\2024Fall\Ihack\IntegrityAndMight-1\videos\output_with_captions.mp4"
+    # Define caption settings (position, font, size, color, etc.)
+    caption_settings = {
+        'fontsize': 40,
+        'color': 'white',
+        'position': 'bottom',  # You can change this to 'top', 'center', etc.
+        'font': 'Arial-Bold'  # Pick a font that works for your system
+    }
 
-    with open(captions_path, 'r') as f:
-        captions = json.load(f)
+    # Adding captions from script[0] (3 parts)
+    duration_per_caption = video_clip.duration / len(script[0])  # Distribute evenly
 
-    add_captions(video_path, captions, output_path)
+    for i, sentence in enumerate(script[0]):
+        # Create a text caption for each script line (use sentence[0] for the text)
+        caption_text = sentence[0]
+        caption_clip = TextClip(caption_text, **caption_settings)
+        caption_clip = caption_clip.set_start(i * duration_per_caption).set_duration(duration_per_caption)
+        caption_clips.append(caption_clip)
+
+    # Add credibility ratings if present in script[1]
+    if len(script) > 1 and isinstance(script[1], list):
+        credibility_lines = script[1][1]  # Assume script[1][1] holds the credibility lines
+        for i, cred_text in enumerate(credibility_lines[:3]):
+            # Set a duration and start time for credibility captions (after the main script is done)
+            start_time = (len(script[0]) + i) * duration_per_caption
+            cred_caption_clip = TextClip(cred_text, **caption_settings)
+            cred_caption_clip = cred_caption_clip.set_start(start_time).set_duration(duration_per_caption)
+            caption_clips.append(cred_caption_clip)
+
+    # Combine the original video with the caption clips
+    final_video = CompositeVideoClip([video_clip] + caption_clips)
+
+    # Write the final video with captions to output path
+    final_video.write_videofile(output_path, codec="libx264")
+
+# Usage example
+video_path = "videos\.mp4"
+json_path = "path_to_json_script.json"
+output_path = "final_video_with_captions.mp4"
+add_captions_with_timing(video_path, json_path, output_path)
