@@ -1,22 +1,15 @@
-import json
-from gtts import gTTS
+import pyttsx3
 
-# Load the script from the JSON file
-def load_script(json_file):
-    with open(json_file, 'r') as f:
-        script_data = json.load(f)
-    return script_data['script']
+def generate_voiceover(script_text, output_path):
+    engine = pyttsx3.init()
+    engine.save_to_file(script_text, output_path)
+    engine.runAndWait()
 
-# Generate AI voiceover for each line in the script
-def generate_voiceover(script, output_audio_file="voiceover.mp3"):
-    full_text = " ".join([line["text"] for line in script])
-    
-    # Use gTTS (Google Text-to-Speech) to generate the audio
-    tts = gTTS(text=full_text, lang='en')
-    tts.save(output_audio_file)
-    print(f"Voiceover saved as {output_audio_file}")
-
-# Example usage
 if __name__ == "__main__":
-    script = load_script("script.json")
-    generate_voiceover(script, "voiceover.mp3")
+    script_path = r"C:\path\to\your\script.txt"  # Path to your script text file
+    output_path = r"C:\Users\14064\OneDrive\Documents\school\2024Fall\Ihack\IntegrityAndMight-1\videos\voiceover.mp3"
+
+    with open(script_path, 'r') as f:
+        script_text = f.read()
+
+    generate_voiceover(script_text, output_path)

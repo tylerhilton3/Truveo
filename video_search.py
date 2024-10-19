@@ -1,56 +1,47 @@
 import os
-import googleapiclient.discovery
-from pytube import YouTube
+import json
+import subprocess
+from yt_dlp import YoutubeDL
 
-# Replace this with your API key
-API_KEY = "AIzaSyA5Nrkx-G0l2rvksNxn_KvEsotZzynhMtU"
+def search_video(query):
+    ydl_opts = {
+        'format': 'best',
+        'noplaylist': True,
+    }
 
-def search_youtube_video(query):
-    # Set up YouTube API client
-    youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=API_KEY)
+    with YoutubeDL(ydl_opts) as ydl:
+        result = ydl.extract_info(query, download=False)
+        if 'entries' in result:
+            video_info = result['entries'][0]
+            return video_info['id'], video_info['title']
+        else:
+            print("No video found for the given query.")
+            return None, None
 
-    # Search for videos
-    request = youtube.search().list(
-        part="snippet",
-        q=query,
-        maxResults=1,
-        type="video"
-    )
-    response = request.execute()
+def download_video(video_id, download_folder):
+    ydl_opts = {
+        'format': 'best',
+        'outtmpl': os.path.join(download_folder, f'{video_id}.mp4'),
+        'noplaylist': True,
+        'postprocessors': [{
+            'key': 'FFmpegVideoConvertor',
+            'preferedformat': 'mp4',
+        }],
+    }
 
-    if len(response['items']) > 0:
-        video_id = response['items'][0]['id']['videoId']
-        video_title = response['items'][0]['snippet']['title']
-        return video_id, video_title
-    else:
-        print("No videos found.")
-        return None, None
-
-def download_video(video_id, download_folder="."):
-    # Construct the YouTube video URL
-    video_url = f"https://www.youtube.com/watch?v={video_id}"
-
-    # Use pytube to download the video
-    yt = YouTube(video_url)
-    yt.streams.get_highest_resolution().download(download_folder)
-
-    print(f"Downloaded video: {yt.title} to {download_folder}")
+    with YoutubeDL(ydl_opts) as ydl:
+        ydl.download([f'https://www.youtube.com/watch?v={video_id}'])
 
 if __name__ == "__main__":
-    # Search query for YouTube video
-    query = "nature documentary"  # You can modify this to be dynamic
+    query = "1 minute meme"  # Your search query
+    download_folder = r"C:\Users\14064\OneDrive\Documents\school\2024Fall\Ihack\IntegrityAndMight-1\videos"
 
-    # Search for video
-    video_id, video_title = search_youtube_video(query)
+    os.makedirs(download_folder, exist_ok=True)
 
-    # If a video was found, download it
+    # Search for the video
+    video_id, title = search_video(query)
+
     if video_id:
-        print(f"Found video: {video_title}")
-
-        # Specify the download folder to save the video in your desired directory
-        download_folder = r"C:\Users\14064\OneDrive\Documents\school\2024Fall\Ihack\IntegrityAndMight-1"
-
-        # Download video to the specified folder
+        # Download the video if a valid video ID was found
         download_video(video_id, download_folder)
-    else:
-        print("No video found.")
+        print(f"Video downloaded: {title}")
