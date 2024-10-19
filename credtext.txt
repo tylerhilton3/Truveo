@@ -8,6 +8,6 @@ Return the evaluation in the following format:
 A summary broken into individual sentences that assess the credibility of the article, with a credibility score at the end (from 1-10).
 In each sentence of the summary, clearly state the reasoning behind the credibility evaluation, such as the presence (or absence) of expert credentials, well-cited sources, or balanced content.
 If the article lacks necessary details, assume it is semi-credible and justify this assumption.
-Finally, provide a list that splits up the summary sentence-by-sentence.
+Finally, provide a list in python that splits up the summary sentence-by-sentence. Each element being a string
 End with a 1-10 credibility rating of the article based on the evaluation criteria.
 
