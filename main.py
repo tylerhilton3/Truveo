@@ -9,6 +9,8 @@ import json
 root = tk.Tk()
 root.geometry("400x200")
 root.title("Truveo")
+icon = tk.PhotoImage(file='images/logo.png')
+root.iconphoto(False, icon)
 
 title_label = tk.Label(root, text="Curecancer.py", font=("Helvetica", 16, "bold"))
 title_label.pack(pady=10)
