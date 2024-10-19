@@ -4,4 +4,4 @@ Identify a key concept or keyword(s) that represents the core idea of that sente
 Return the summary as two lists:
 List 1: Each sentence of the summary, focusing on the core message.
 List 2: The corresponding keyword(s) for each sentence, to be used in video searches.
-The output should be formatted as a list of two sublists, with List 1 containing the summarized sentences and List 2 containing the associated keyword(s). If you cannot identify clear keywords, make an educated guess based on the article’s themes."
+The output should be formatted as a list in python with two sublists, with List 1 containing the summarized sentences and List 2 containing the associated keyword(s). If you cannot identify clear keywords, make an educated guess based on the article’s themes."
