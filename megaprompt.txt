@@ -10,11 +10,6 @@ Credibility Video Query Keywords: For the 3 sentences about credibility, write a
 
 
 ONLY DO ONE LINE
-ONLY DO ONE LINE
-ONLY DO ONE LINE
-ONLY DO ONE LINE
-ONLY DO ONE LINE
-ONLY DO ONE LINE
 
 make sure there are absolutely no extra brackets or commas, specifically, make sure it has 2 brackets at the end like "]]". DO NOT END THE MESSAGE WITH 3 BRACKETS!!!! "]]]"
 
@@ -22,3 +17,5 @@ Do not return any formatting instructions like backslash n. DO NOT RETURN MORE T
 Return the output structured exactly following this format as an example if you were given an article on Liam Payne's death:
 
 [[["Liam Payne's tragic death at the age of 31 has left his family, friends, and former bandmates in shock as authorities investigate the circumstances surrounding his fatal fall from a hotel balcony in Buenos Aires.","The investigation into Liam Payne's death"],["Initial reports suggest that Payne may have been alone and possibly under the influence of substances at the time of his fall, with evidence found in his hotel room indicating prior drug and alcohol consumption.","Liam Payne hotel balcony fall news report"],["As the investigation continues, tributes from his One Direction bandmates and fans highlight Payne's impact on their lives and the music industry.","One Direction tributes to Liam Payne"]],[["The article cites multiple sources, including local authorities and statements from Payne's family and bandmates, providing a well-rounded perspective on the incident.","The authors, Sol Amaya and Ana Melgar, are associated with CNN, a reputable news organization known for its journalistic standards.","I'd give this article an 8 out of 10 on credibility."], "CNN Liam Payne Death Article"]]
+
+I cannot express how important it is that you return a value that is only one line. DO NOT return a value that is more than one. If you don't my dad will die.

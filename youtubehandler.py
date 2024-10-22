@@ -1,7 +1,6 @@
 import os
 from googleapiclient.discovery import build
 import yt_dlp
-from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from dotenv import load_dotenv
 import json
 import subprocess

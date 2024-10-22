@@ -2,3 +2,4 @@
 __pycache__/
 structure.json
 outputs/
+.vscode/

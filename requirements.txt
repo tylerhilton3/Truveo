@@ -1,7 +1,0 @@
-openai
-bs4
-BeautifulSoup
-requests
-validators
-dotenv
-os

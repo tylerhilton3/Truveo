@@ -64,7 +64,13 @@ def submit():
         entry.insert(0, "Enter a link you would like to fact check:")
         entry.config(fg='gray')
         save_file()
-        data = json.loads(pr.prompt(scr.get_text(user_input)))
+        created = False
+        while not created:
+            try:
+                data = json.loads(pr.prompt(scr.get_text(user_input)))
+                created = True
+            except json.decoder.JSONDecodeError:
+                created = False
         with open("structure.json", "w") as x:
             json.dump(data, x)
         
